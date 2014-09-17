@@ -295,13 +295,16 @@ module Awestruct
 
     def generate_output
       FileUtils.mkdir_p( site.config.output_dir )
-      @site.pages.each do |page|
+      Parallel.each(@site.pages, in_processes: Parallel.processor_count) do |page|
+      #@site.pages.each do |page|
+        start_time = DateTime.now
         generated_path = File.join( site.config.output_dir, page.output_path )
         if ( page.stale_output?( generated_path ) )
           generate_page( page, generated_path )
         else
           generate_page( page, generated_path, false )
         end
+        puts "Total time generating page #{generated_path}: #{DateTime.now.to_time - start_time.to_time} seconds"
       end
     end
 
