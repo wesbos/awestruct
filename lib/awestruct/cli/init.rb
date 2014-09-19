@@ -38,7 +38,7 @@ module Awestruct
           when 'bootstrap'
             lib = 'bootstrap-sass'
           when 'foundation'
-            lib = 'zurb-foundation'
+            lib = 'foundation-rails'
           when '960'
             lib = 'ninesixty'
         end
